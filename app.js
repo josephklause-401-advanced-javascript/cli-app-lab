@@ -99,13 +99,12 @@ module.exports = class App {
                                 ])
                                 .then(answers => this.putToDatabase(answers));
                             } console.log('Thanks for adding to my database!');
-                         
                           });
                       });
                   } console.log('Thanks for adding to my database');
                 }); 
             });
-        } console.log('Thanks for adding to my database');
+        } console.log('Thanks for visiting');
       });
   }
 
