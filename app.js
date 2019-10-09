@@ -49,66 +49,67 @@ module.exports = class App {
         }
       ])
       .then(answers => {
-        return this.displayAndPostAnswers(answers)
-          .then(() => {
-            return inquirer
-              .prompt([
-                {
-                  type: 'confirm',
-                  name: 'getFromDB',
-                  message: 'Would you like to see everyone who has signed into the database?',
-                  default: 'y'
-                }
-              ])
-              .then(answer => {
-                if(answer) {
-                  return this.getFromDatabase(answer)
-                    .then(() => {
-                      return inquirer
-                        .prompt([
-                          {
-                            type: 'confirm',
-                            name: 'getFromDB',
-                            message: 'Want to change someone\'s name?',
-                            default: 'y'
-                          }
-                        ])
-                        .then(answer => {
-                          if(answer) {
-                            return inquirer
-                              .prompt([
-                                {
-                                  type: 'input',
-                                  name: 'updateId',
-                                  message: 'Copy an id and paste it here'
-                                },
-                                {
-                                  type: 'list',
-                                  name: 'whichName',
-                                  message: 'Do you want to change the first or last name?',
-                                  choices: ['firstName', 'lastName'],
-                                  default: 'firstName'
-                                },
-                                {
-                                  type: 'input',
-                                  name: 'nameUpdate',
-                                  message: 'What would you like to change it to?',
-                                  default: 'Jabba'
-                                }
-                              ])
-                              .then(answers => this.putToDatabase(answers));
-                          } console.log('Thanks for adding to my database!');
-                          console.log('Good Bye!');
-                        });
-                    });
-                }
-              }); 
-          });
+        if(answers.saveToDB) {
+          return this.displayAndPostAnswers(answers)
+            .then(() => {
+              return inquirer
+                .prompt([
+                  {
+                    type: 'confirm',
+                    name: 'getFromDB',
+                    message: 'Would you like to see everyone who has signed into the database?',
+                    default: 'y'
+                  }
+                ])
+                .then(answer => {
+                  if(answer.getFromDB) {
+                    return this.getFromDatabase(answer)
+                      .then(() => {
+                        return inquirer
+                          .prompt([
+                            {
+                              type: 'confirm',
+                              name: 'changeName',
+                              message: 'Want to change someone\'s name?',
+                              default: 'y'
+                            }
+                          ])
+                          .then(answer => {
+                            if(answer.changeName) {
+                              return inquirer
+                                .prompt([
+                                  {
+                                    type: 'input',
+                                    name: 'updateId',
+                                    message: 'Copy an id and paste it here'
+                                  },
+                                  {
+                                    type: 'list',
+                                    name: 'whichName',
+                                    message: 'Do you want to change the first or last name?',
+                                    choices: ['firstName', 'lastName'],
+                                    default: 'firstName'
+                                  },
+                                  {
+                                    type: 'input',
+                                    name: 'nameUpdate',
+                                    message: 'What would you like to change it to?',
+                                    default: 'Jabba'
+                                  }
+                                ])
+                                .then(answers => this.putToDatabase(answers));
+                            } console.log('Thanks for adding to my database!');
+                         
+                          });
+                      });
+                  } console.log('Thanks for adding to my database');
+                }); 
+            });
+        } console.log('Thanks for adding to my database');
       });
   }
 
   displayAndPostAnswers(answers) {
-  
     userAnswers = {
       firstName: answers.firstName,
       lastName: answers.lastName,
@@ -116,10 +117,7 @@ module.exports = class App {
       likeStarWars: answers.likeStarWars,
       favAnimals: answers.favAnimals
     };
-    if(answers.saveToDB) {
-      return this.api.postUser(userAnswers);
-    }
-    return userAnswers;
+    return this.api.postUser(userAnswers);
   }
   
  
