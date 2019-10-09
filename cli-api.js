@@ -11,7 +11,13 @@ function getUsers() {
     .get('http://localhost:3000/api/cli-users');
 }
 
+function updateUserInfo(id, update) {
+  return request
+    .put(`http://localhost:3000/api/cli-users/${id}`)
+    .send(update);
+}
 module.exports = {
   postUser,
-  getUsers
+  getUsers,
+  updateUserInfo
 };

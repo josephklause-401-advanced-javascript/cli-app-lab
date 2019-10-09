@@ -61,26 +61,48 @@ module.exports = class App {
                 }
               ])
               .then(answer => {
-                if()
-                return this.getFromDatabase(answer)
-                  .then(() => {
-                    return inquirer
-                      .prompt([
-                        {
-                          type: 'input',
-                          name: 'updateById',
-                          message: 'Want to change someone\'s name? Copy an id and paste it here'
-                        },
-                        {
-                          type: 'list',
-                          name: 'whichName',
-                          message: 'Do you want to change the first or last name?',
-                          choices: ['First Name', 'Last Name']
-                        }
-                      ])
-                      .then(answers => this.putToDatabase(answers));
-                  });
-              });
+                if(answer) {
+                  return this.getFromDatabase(answer)
+                    .then(() => {
+                      return inquirer
+                        .prompt([
+                          {
+                            type: 'confirm',
+                            name: 'getFromDB',
+                            message: 'Want to change someone\'s name?',
+                            default: 'y'
+                          }
+                        ])
+                        .then(answer => {
+                          if(answer) {
+                            return inquirer
+                              .prompt([
+                                {
+                                  type: 'input',
+                                  name: 'updateId',
+                                  message: 'Copy an id and paste it here'
+                                },
+                                {
+                                  type: 'list',
+                                  name: 'whichName',
+                                  message: 'Do you want to change the first or last name?',
+                                  choices: ['firstName', 'lastName'],
+                                  default: 'firstName'
+                                },
+                                {
+                                  type: 'input',
+                                  name: 'nameUpdate',
+                                  message: 'What would you like to change it to?',
+                                  default: 'Jabba'
+                                }
+                              ])
+                              .then(answers => this.putToDatabase(answers));
+                          } console.log('Thanks for adding to my database!');
+                          console.log('Good Bye!');
+                        });
+                    });
+                }
+              }); 
           });
       });
   }
@@ -112,7 +134,21 @@ module.exports = class App {
   }
 
   putToDatabase(answers) {
-    
+    let update = {};
+    if(answers.whichName === 'firstName') {
+      update = {
+        firstName: answers.nameUpdate
+      };
+    } else {
+      update = {
+        lastName: answers.nameUpdate
+      };
+    }
+    return this.api.updateUserInfo(answers.updateId, update)
+      .then(({ body }) => {
+        console.log(body);
+        console.log('Thanks for adding to my database!');
+      });
   }
 
 };
