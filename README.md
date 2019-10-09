@@ -5,8 +5,8 @@
 ### Author: Joe Klause
 
 ### Links and Resources
-* [submission PR](http://xyz.com)
-* [travis](http://xyz.com)
+* [submission PR](https://github.com/josephklause-401-advanced-javascript/cli-app-lab/pull/1)
+* [travis](hhttps://travis-ci.com/josephklause-401-advanced-javascript/cli-app-lab)
 * [back-end](http://xyz.com) (when applicable)
 
 #### Running the app
