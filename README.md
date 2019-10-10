@@ -5,9 +5,9 @@
 ### Author: Joe Klause
 
 ### Links and Resources
-* [submission PR](https://github.com/josephklause-401-advanced-javascript/cli-app-lab/pull/1)
+* [submission PR](https://github.com/josephklause-401-advanced-javascript/cli-app-lab/pull/3)
 * [travis](hhttps://travis-ci.com/josephklause-401-advanced-javascript/cli-app-lab)
-* [back-end](http://xyz.com) (when applicable)
+* [heroku](https://cli-lab-2019.herokuapp.com/)
 
 #### Running the app
 Commands:

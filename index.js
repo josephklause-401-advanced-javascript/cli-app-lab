@@ -1,7 +1,7 @@
-const App = require('./app');
-const api = require('./cli-api');
+const CliApp = require('./lib/cli-app/cli-app');
+const api = require('./lib/cli-app/cli-api');
 
 
-const app = new App(api);
+const cliApp = new CliApp(api);
 
-app.start();
+cliApp.start();
